@@ -14,7 +14,7 @@
 - [Contributing](#contributing)
 - [License](#license)
 - [Authors](#authors)
-- [Download the සිංLingua Toolkit](https://drive.google.com/file/d/1xviBwuhK0ydw0OgeYASK_vKm2N1s3eS-/view?usp=sharing)
+- [Download සිංLingua Toolkit](https://drive.google.com/file/d/1xviBwuhK0ydw0OgeYASK_vKm2N1s3eS-/view?usp=sharing)
 
 ## About සිංLingua Toolkit
 
@@ -36,7 +36,7 @@ The **සිංLingua Toolkit** is a desktop application built to simplify Sinha
 
 ## Download
 
-- [Download the සිංLingua Toolkit](https://drive.google.com/file/d/1xviBwuhK0ydw0OgeYASK_vKm2N1s3eS-/view?usp=sharing)
+- [Download සිංLingua Toolkit](https://drive.google.com/file/d/1xviBwuhK0ydw0OgeYASK_vKm2N1s3eS-/view?usp=sharing)
 
 ## Contributing
 
