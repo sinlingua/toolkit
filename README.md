@@ -31,8 +31,8 @@ The **සිංLingua Toolkit** is a desktop application built to simplify Sinha
 ## Usage
 
 1. **Download**: Click on the link below to download the සිංLingua Toolkit for your operating system.
-2. **Installation**: Follow the installation instructions for your OS.
-3. **Launch**: Open the toolkit and start using its features to process Sinhala language data.
+2. **Installation**: Extract the compressed toolkit.
+3. **Launch**: Double click on sinlingua-toolkit.exe to launch the application.
 
 ## Download
 
