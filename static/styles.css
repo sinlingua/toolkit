@@ -1,0 +1,47 @@
+/* styles.css */
+
+/* Common styles */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+/* Styles for the side navigation bar */
+.sidenav {
+    width: 250px;
+    background-color: #333;
+    top: 0;
+    left: 0;
+    height: 100%;
+    padding-top: 20px;
+    display: flex;
+    flex-direction: column;
+    position:fixed;
+    z-index:1000;
+}
+
+/* Styles for side navigation bar links */
+.sidenav a {
+    padding: 10px 15px;
+    text-decoration: none;
+    font-size: 18px;
+    color: #fff;
+    transition: background-color 0.3s;
+}
+
+.sidenav a:hover {
+    background-color: #555;
+}
+
+/* Styles for the content area */
+.content {
+    margin-left: 250px; /* Match the width of the side navigation bar */
+    padding: 20px;
+    background-color: #f0f0f0;
+}
+
+/* Add this style to your styles.css */
+.sidenav-hidden {
+    transform: translateX(-250px);
+}

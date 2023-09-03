@@ -1,29 +1,186 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    <link rel="stylesheet" type="text/css" href="../static/style.css">
+    <title>Input Page</title>
+    <!-- Include Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../static/styles.css">
 </head>
 <body>
+
+<!-- Side Navigation Bar -->
+<div class="sidenav" id="js-sidenav">
+    <a href="{{ url_for('index') }}">Default Toolkit</a>
+    <a href="{{ url_for('singlish') }}">Advance Singlish</a>
+    <a href="{{ url_for('grammar') }}">Advance Grammar</a>
+    <a href="{{ url_for('summarize') }}">Advance Summarize</a>
+    <!-- Add more links for other sections or pages -->
+</div>
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-12 text-center mb-4">
+            <h1>සිංLingua Toolkit</h1>
+            <hr>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <form id="inputForm" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="inputText">Enter Text or Upload Audio:</label>
+                    <textarea class="form-control" id="inputText" name="input_text" rows="5"></textarea>
+                    <div class="custom-file mt-1">
+                        <input type="file" accept="audio/*" class="custom-file-input" id="audioInput"
+                               name="audio_input">
+                        <label class="custom-file-label" for="audioInput">Choose File</label>
+                    </div>
+                </div>
+                <div class="form-group mt-1">
+                    <label>Checkboxes:</label>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="checkbox1" name="checkbox1">
+                        <label class="form-check-label" for="checkbox1">Singlish to Sinhala Text Conversion</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="checkbox2" name="checkbox2">
+                        <label class="form-check-label" for="checkbox2">Audio to Sinhala Text Conversion</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="checkbox3" name="checkbox3">
+                        <label class="form-check-label" for="checkbox3">Grammar Rule Mapping</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="checkbox4" name="checkbox4">
+                        <label class="form-check-label" for="checkbox4">Sinhala Text Summarization</label>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Process</button>
+                <button type="reset" class="btn btn-secondary">Reset</button>
+            </form>
+            <!-- Error Alert -->
+            <div class="alert alert-danger mt-3" id="errorAlert" style="display: none;">
+                <strong>Error:</strong> <span id="errorText"></span>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="processedResult">Processed Result:</label>
+                <textarea class="form-control" id="processedResult" rows="5" readonly></textarea>
+            </div>
+            <button id="copyButton" class="btn btn-secondary">Copy</button>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="../static/script.js"></script>
 <script>
-    async function getRequest(url = '') {
-        const response = await fetch(url, {
-            method: 'GET',
-            cache: 'no-cache'
-        })
-        return response.json()
-    }
-    document.addEventListener('DOMContentLoaded', function () {
-        let url = document.location
-        let route = "/flaskwebgui-keep-server-alive"
-        let interval_request = 3 * 1000 //sec
-        function keep_alive_server() {
-            getRequest(url + route)
-                .then(data => console.log(data))
+    $(document).ready(function () {
+        // Automatically handle checkbox behavior based on input type
+        $('#inputText').on('input', function () {
+            var inputText = $(this).val();
+            var audioInput = $('#audioInput')[0].files[0];
+
+            if (inputText && !audioInput) {
+                $('#checkbox2').prop('checked', false).prop('disabled', true);
+                $('#audioInput').prop('disabled', true);
+            } else {
+                $('#checkbox2').prop('checked', true).prop('disabled', false);
+                $('#audioInput').prop('disabled', false);
+            }
+        });
+
+        $('#audioInput').change(function () {
+            var inputText = $('#inputText').val();
+            var audioInput = $(this)[0].files[0];
+
+            if (audioInput) {
+                $('#checkbox1').prop('checked', false).prop('disabled', true);
+                $('#inputText').prop('disabled', true);
+            } else {
+                $('#checkbox1').prop('disabled', false);
+                $('#inputText').prop('disabled', false);
+            }
+        });
+
+        $('#inputForm').submit(function (event) {
+            event.preventDefault();
+            $('#errorAlert').hide(); // Hide error alert on form submission
+            var inputText = $('#inputText').val();
+            var audioInput = $('#audioInput')[0].files[0]; // Get the selected audio file
+            var checkbox1 = $('#checkbox1').is(':checked');
+            var checkbox2 = $('#checkbox2').is(':checked');
+            var checkbox3 = $('#checkbox3').is(':checked');
+            var checkbox4 = $('#checkbox4').is(':checked');
+
+            // Check if either text or audio input is provided
+            if (!inputText && !audioInput) {
+                showError("Please provide either text or audio input.");
+                return;
+            }
+
+            // Check for specific conditions based on checkboxes
+            if (checkbox2 && !audioInput) {
+                showError("No audio file inserted for Audio to Sinhala Text Conversion.");
+                return;
+            }
+            if (!checkbox1 && !checkbox2 && !checkbox3 && !checkbox4) {
+                showError("Please select at least one checkbox.");
+                return;
+            }
+
+            var formData = new FormData();
+            formData.append('input_text', inputText);
+            formData.append('audio_input', audioInput);
+            formData.append('checkbox1', checkbox1);
+            formData.append('checkbox2', checkbox2);
+            formData.append('checkbox3', checkbox3);
+            formData.append('checkbox4', checkbox4);
+
+            $.ajax({
+                type: 'POST',
+                url: '/process',
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function (response) {
+                    $('#processedResult').val(response.processed_result);
+                }
+            });
+        });
+
+        $('#copyButton').click(function () {
+            var copyText = $('#processedResult');
+            copyText.select();
+            document.execCommand('copy');
+        });
+
+        // Display selected file name in the "Choose File" input field
+        $('#audioInput').change(function () {
+            var fileName = $(this).val().split('\\').pop();
+            $(this).siblings('.custom-file-label').addClass('selected').html(fileName);
+        });
+
+        // Function to show error in the error alert
+        function showError(message) {
+            $('#errorText').text(message);
+            $('#errorAlert').show();
         }
-        setInterval(keep_alive_server, interval_request)()
-    })
+
+        // Reset the form when "Reset" button is clicked
+        $('#inputForm button[type="reset"]').click(function () {
+            $('#inputForm')[0].reset(); // Reset the form
+            $('#checkbox2').prop('disabled', false); // Enable checkbox2
+            $('#checkbox1').prop('disabled', false); // Enable checkbox1
+            $('#audioInput').prop('disabled', false); // Enable audio input
+            $('#inputText').prop('disabled', false); // Enable text input
+            $('#errorAlert').hide(); // Hide error alert
+
+            // Reset the audio input field
+            $('#audioInput').replaceWith($('#audioInput').val('').clone(true));
+            $('#audioInput').siblings('.custom-file-label').removeClass('selected').html('Choose File');
+        });
+    });
 </script>
 </body>
 </html>
