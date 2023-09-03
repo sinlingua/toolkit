@@ -14,6 +14,7 @@
 - [Contributing](#contributing)
 - [License](#license)
 - [Authors](#authors)
+- [Download the සිංLingua Toolkit](https://drive.google.com/file/d/1xviBwuhK0ydw0OgeYASK_vKm2N1s3eS-/view?usp=sharing)
 
 ## About සිංLingua Toolkit
 
