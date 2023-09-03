@@ -1,0 +1,27 @@
+{
+  "name": "sinligua-toolkit",
+  "productName": "sinligua-toolkit",
+  "version": "0.1.0",
+  "description": "Toolkit for SinLingua library",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "author": "Supun Gurusinghe, Sandaruwini Galappaththi, Binura Yasodya, Sarada Wijesinghe",
+  "license": "MIT",
+  "dependencies": {
+    "request-promise": "*"
+  },
+  "devDependencies": {
+    "electron": "^25.8.0",
+    "electron-builder": "^24.6.3",
+    "electron-packager": "^17.1.2"
+  },
+  "build": {
+    "directories": {
+      "test": "tests"
+    },
+    "appId": "com.example.yourapp"
+  },
+  "keywords": []
+}
