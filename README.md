@@ -35,7 +35,7 @@ The **සිංLingua Toolkit** is a desktop application built to simplify Sinha
 
 ## Download
 
-- [Download the සිංLingua Toolkit](#) [Insert Download Link Here]
+- [Download the සිංLingua Toolkit](https://drive.google.com/file/d/1xviBwuhK0ydw0OgeYASK_vKm2N1s3eS-/view?usp=sharing)
 
 ## Contributing
 
