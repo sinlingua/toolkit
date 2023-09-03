@@ -1,0 +1,4 @@
+Flask
+sinlingua==0.1.5
+flaskwebgui
+python-Levenshtein==0.21.1
